@@ -23,21 +23,8 @@
             <option value="gls">Стакан (200 мл)</option>
         </select>
         <button id="calc">Конвертировать!</button>
-        <script>
 
-            var calc_butt = document.getElementById('calc')
-            var typeInput = document.getElementById("products")
-
-            calc_butt.addEventListener('click', () => {
-
-                var type = typeInput.value
-                
-                console.log(type)
-
-                window.electronAPI.sendToPython(type)
-
-            })
-        </script>
         <p id="result"></p>
+        <script src="./renderer.js"></script>
     </body>
 </html>
