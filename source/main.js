@@ -1,37 +1,42 @@
 const { app, BrowserWindow, ipcMain }= require('electron')
-const { PythonShell } = require('python-shell')
+const PythonShell = require('python-shell')
+const spawn = require('child_process').spawn;
 const path = require('path')
 
 app.disableHardwareAcceleration()
 
-app.commandLine.appendSwitch("enable-logging");
-app.commandLine.appendSwitch("log-file=logs.txt");
-
-
-let pyshell = new PythonShell('script.py')
+let options = {
+    mode: "json",
+    pythonPath: "python",
+    pythonOptions: ['-u'],
+}
+const pythonProcess = spawn('python3', ["script.py"])
+let pyshell = new PythonShell('script.py', options)
 
 async function createWindow () {
-    let win = new BrowserWindow({
+    let mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'preload.js'),
+            devTools: true,
         }
     })
-    win.loadFile('index.html')
+    mainWindow.loadFile('index.html')
 
-    win.on('ready-to-show', async () => {
-        win.show()
-        win.maximize()
+    mainWindow.on('ready-to-show', async () => {
+        mainWindow.show()
     })
 
-    win.removeMenu()
-
-    ipcMain.on('send-to-python', (event, type) => {
-        console.log(type)
-        
-        
-    })
+    mainWindow.removeMenu()
+    
+    ipcMain.on('send-to-python', (event, type, out_type, out_val) => {
+        const webContents = event.sender
+        const win = BrowserWindow.fromWebContents(webContents)
+        console.log(`type: ${type}\n out_type: ${out_type}\n out_val: ${out_val}`)
+        pyshell.send([type, out_type, out_val])
+        pythonProcess.stdin.on('')
+    }) 
 }
 
 app.whenReady().then(() => {
@@ -42,14 +47,11 @@ app.whenReady().then(() => {
     })
 })
 
+
+
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
-    pyshell.end(function (err) {
-        if (err){
-          throw err
-        };
-        console.log('finished')
-      })
+    pyshell.end()
 })
 
 
