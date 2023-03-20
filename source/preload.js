@@ -1,5 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
-contextBridge.exposeInMainWorld('electronAPI', {
-    sendToPython: (type) => ipcRenderer.sendSync('send-to-python', type)
+contextBridge.exposeInMainWorld('calculatorAPI', {
+    sendToPython: (type, out_type, out_val) => ipcRenderer.send('send-to-python', type, out_type, out_val)
 })

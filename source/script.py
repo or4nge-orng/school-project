@@ -1,9 +1,7 @@
-import sys, json
+import sys
 
-data = sys.stdin.readlines()
-#data = json.loads(data)
+data = sys.stdin.readline()
 
-print("hello world")
 print(data)
 
 sys.stdout.flush()
