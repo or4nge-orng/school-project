@@ -5,8 +5,8 @@
         <title>Калькулятор повара</title>
         <!--<link rel="stylesheet" href="css/style.css">-->
         <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-        <script type="text/javascript" src="/eel.js"></script>
-        
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     </head>
     <body>
         <select id="products">
@@ -22,9 +22,21 @@
             <option value="tsp">Чайная ложка</option>
             <option value="gls">Стакан (200 мл)</option>
         </select>
-        <button id="calc">Конвертировать!</button>
+        <button id="calc", pys-click="calc">Конвертировать!</button>
 
         <p id="result"></p>
-        <script src="./renderer.js"></script>
+
+        <py-config>
+            packages = ["sqlite3"]
+        </py-config>
+
+        <py-script>
+
+            import sqlite3
+            
+            def calc(*args, **kwargs):    
+                output = Element('result')
+                output.write('clicked')
+        </py-script>
     </body>
 </html>
