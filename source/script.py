@@ -1,7 +1,14 @@
 import sys
 
-data = sys.stdin.readline()
+def my_print(str):
+    print('python-output(' + str + ')')
 
-print(data)
 
-sys.stdout.flush()
+# CODE
+
+
+while True:
+    line = sys.stdin.readline()
+
+    my_print(line)
+    exit(0)
