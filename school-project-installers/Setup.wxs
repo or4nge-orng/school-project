@@ -1,0 +1,40 @@
+﻿<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+  <Product Id="*" Name="school-project Deployment Tool" Language="1033" Codepage="1252" Version="!(bind.FileVersion.school-project.exe)" UpgradeCode="da627542-9b9d-5d13-8433-dc63d9b53d37" Manufacturer="Ilya Shirokov">
+
+    <Package Description="This package installs a deployment tool for school-project. Not school-project itself. school-project is only installed if a user logs into the machine." InstallScope="perMachine" Comments="Comments" InstallerVersion="200" Compressed="yes" Platform="x86"/>
+    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A later version of this product is already installed. Setup will now exit."/>
+    <Media Id="1" Cabinet="contents.cab" EmbedCab="yes" CompressionLevel="high"/>
+
+    <PropertyRef Id="NETFRAMEWORK45" />
+
+    <Condition Message="This application requires .NET Framework 4.5 or higher. Please install the latest .NET Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK45]]>
+    </Condition>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="APPLICATIONROOTDIRECTORY" Name="school-project Deployment" />
+      </Directory>
+    </Directory>
+
+    <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
+      <Component Id="school-project.exe" Guid="215c5771-8b0c-5a56-ab7b-24ea6d01af30" Win64="no">
+        <File Id="school-project.exe" Name="school-projectDeploymentTool.exe" Source="./Setup.exe" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="TARGETDIR">
+      <Component Id="RegistryEntries" Guid="c37c3f2e-3a40-5931-84a4-fe899173466a" Win64="no">
+        <RegistryKey Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Run">
+          <RegistryValue Type="expandable" Name="school-projectDeployment" Value="&quot;[#school-project.exe]&quot; --checkInstall" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+
+    <Feature Id="MainApplication" Title="Main Application" Level="1">
+      <ComponentRef Id="school-project.exe" />
+      <ComponentRef Id="RegistryEntries" />
+    </Feature>
+  </Product>
+</Wix>
+
