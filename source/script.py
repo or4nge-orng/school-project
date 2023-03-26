@@ -1,14 +1,6 @@
 import sys
+import sqlite3
 
-def my_print(str):
-    print('python-output(' + str + ')')
+in_data = sys.argv
 
-
-# CODE
-
-
-while True:
-    line = sys.stdin.readline()
-
-    my_print(line)
-    exit(0)
+print(type(in_data), flush=True)
