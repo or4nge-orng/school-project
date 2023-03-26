@@ -51,10 +51,8 @@ ipcMain.on('send-to-python', (event, type, out_type, out_val) => {
       };
       
       PythonShell.run('script.py', options).then(results=>{
-        // results is an array consisting of messages collected during execution
-        var result = results
-        console.log(result[0]);
-        win.webContents.send('send-result', result)
+        console.log(results)
+        win.webContents.send('send-result', results)
       });
       
 })
