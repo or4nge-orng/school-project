@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Калькулятор повара</title>
+        <!--<link rel="stylesheet" href="css/style.css">-->
+        <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+        <script type="text/javascript" src="/eel.js"></script>
+        <link rel="stylesheet" href="./css/style.css">
+    </head>
+    <body>
+        <div class="main-content-box">
+            <div class="options">
+            <select id="products" class="main-content">
+                <option value="salt">Соль</option>
+                <option value="flour">Мука</option>
+                <option value="sugar">Сахар</option>
+                <option value="sugar_dust">Сахарная пудра</option>
+                <option disabled hidden selected value="error">Название продукта</option>
+            </select>
+            <input type="text" id="in-val" class="main-content" placeholder="Введите величину">
+            <select id="type-in" class="main-content">
+                <option value="tbs">Столовая ложка</option>
+                <option value="tsp">Чайная ложка</option>
+                <option value="gls">Стакан (200 мл)</option>
+            </select>
+            </div>
+            <div class="calc">
+            <button id="calc" class="calc-butt">Конвертировать!</button>
+
+            <p id="result" class="calc">4145454654654656</p>
+            <script src="./renderer.js"></script>
+        </div>
+        </div>
+    </body>
+</html>
